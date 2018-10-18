@@ -23,6 +23,16 @@ def convert(data):
     data = num.fit_transform(data)
     return(data)
 
+#Label Encoding - convert the string to categorical in the same column
+from sklearn.preprocessing import LabelEncoder
+labelencoder = LabelEncoder()
+x[:, 0] = labelencoder.fit_transform(x[:, 0])
+
+#One Hot encoding - converts the string to categorical in diffent column
+from sklearn.preprocessing import OneHotEncoder
+onehotencoder = OneHotEncoder(categorical_features = [0])
+x = onehotencoder.fit_transform(x).toarray()
+
 #Split to X and Y category
 Y = convert(chrg.Category)
 X = convert(chrg.Text)
@@ -35,8 +45,6 @@ X_Train, X_Test, Y_Train, Y_Test = train_test_split(X,Y, test_size = 0.2, random
 from sklearn.naive_bayes import GaussianNB
 from sklearn.naive_bayes import BernoulliNB 
 from sklearn.naive_bayes import MultinomialNB
-
-#Gaussian NB
 
 #Bernoulli NB
 BernNB = BernoulliNB(binarize = True)
